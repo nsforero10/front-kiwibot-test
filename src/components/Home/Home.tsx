@@ -38,6 +38,7 @@ export default function Home() {
         deliveryWitKey.key = delivery.id;
         deliveyList.push(deliveryWitKey);
       });
+      setDeliveries([]);
       setDeliveries(deliveyList);
     } catch (err) {
       alert(err);
@@ -47,6 +48,12 @@ export default function Home() {
   const getBots = async () => {
     try {
       const response = (await api.getBots()) as Bot[];
+      const botList = [];
+      response.map((bot) => {
+        const botWithKey = bot;
+        botWithKey.key = bot.id;
+        botList.push(botWithKey);
+      });
       setBots(response);
     } catch (err) {
       alert(err);

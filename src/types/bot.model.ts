@@ -4,6 +4,7 @@ export enum botState {
   reserved = "reserver",
 }
 export interface Bot {
+  key: string;
   id: string;
   number: number;
   status: botState;
