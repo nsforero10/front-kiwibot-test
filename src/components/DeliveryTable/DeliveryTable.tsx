@@ -113,6 +113,13 @@ export function DeliveryTable(props: IDeliveryTableProps) {
       await api.updateDelivery(deliveryId, {
         state: state,
       });
+      if (state === "in_transit")
+        await api.updateBot(
+          deliveries.filter((delivery) => deliveryId == delivery.id)[0].bot,
+          {
+            status: "busy",
+          }
+        );
       props.callback();
     } catch (err) {
       alert(err);
@@ -124,6 +131,9 @@ export function DeliveryTable(props: IDeliveryTableProps) {
         bot: botId,
         state: "assigned",
       });
+      await api.updateBot(botId, {
+        status: "reserved",
+      });
       props.callback();
     } catch (err) {
       alert(err);
@@ -131,7 +141,8 @@ export function DeliveryTable(props: IDeliveryTableProps) {
   };
   return (
     <div>
-      <Table dataSource={deliveries} columns={columns}></Table>
+      <h2> Delivery Table</h2>
+      <Table dataSource={deliveries} columns={columns} size="middle"></Table>
     </div>
   );
 }

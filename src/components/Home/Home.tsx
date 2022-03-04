@@ -4,6 +4,8 @@ import api from "../../api/api";
 import { Delivery } from "../../types/delivery.model";
 import { Bot } from "../../types/bot.model";
 import { DeliveryTable } from "../DeliveryTable/DeliveryTable";
+import { BotTable } from "../BotsTable/BotTable";
+const { Header, Footer, Sider, Content } = Layout;
 
 export default function Home() {
   const [deliveries, setDeliveries] = useState<Delivery[]>([]);
@@ -53,11 +55,39 @@ export default function Home() {
 
   return (
     <Layout>
-      <DeliveryTable
-        deliveries={deliveries}
-        bots={bots}
-        callback={getDeliveries}
-      ></DeliveryTable>
+      <Header>
+        <h1 style={{ color: "whitesmoke" }}> Kiwibot technical test</h1>
+      </Header>
+      <section
+        style={{ display: "flex", flexDirection: "row", margin: "1rem" }}
+      >
+        <div>
+          <h2
+            style={{
+              textAlign: "center",
+            }}
+          >
+            {" "}
+            Bots list
+          </h2>
+          <BotTable bots={bots}></BotTable>
+        </div>
+        <Content>
+          <DeliveryTable
+            deliveries={deliveries}
+            bots={bots}
+            callback={() => {
+              getDeliveries();
+              getBots();
+            }}
+          ></DeliveryTable>
+        </Content>
+      </section>
+      <Footer style={{ textAlign: "center" }}>
+        {" "}
+        <a href="https://github.com/nsforero10">@nsforero10</a> @2022 Created by
+        Nicolas Forero in Colombia
+      </Footer>
     </Layout>
   );
 }

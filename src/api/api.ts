@@ -30,4 +30,13 @@ export default {
       });
     });
   },
+  updateBot(botId: string, updateObject: unknown) {
+    return new Promise((resolve) => {
+      axios
+        .put<Delivery>(`${apiurl}/bots/${botId}`, updateObject)
+        .then((res) => {
+          resolve(res.data);
+        });
+    });
+  },
 };
